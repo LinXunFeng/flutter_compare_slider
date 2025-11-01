@@ -1,0 +1,21 @@
+name: compare_slider
+description: "A slider that allows users to compare two widgets."
+version: 0.0.1
+homepage: https://github.com/LinXunFeng/flutter_compare_slider
+repository: https://github.com/LinXunFeng/flutter_compare_slider
+issue_tracker: https://github.com/LinXunFeng/flutter_compare_slider/issues
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+  flutter: '>=3.7.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  extra_hittest_area: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
