@@ -41,6 +41,9 @@ class CompareSlider extends StatefulWidget {
   /// The slider thumb widget.
   final Widget thumb;
 
+  /// The thickness of the slider.
+  final double thickness;
+
   /// Callback invoked when the slider's value changes.
   final ValueChanged<double> onValueChanged;
 
@@ -75,6 +78,7 @@ class CompareSlider extends StatefulWidget {
     required this.value,
     required this.before,
     required this.after,
+    required this.thickness,
     required this.thumb,
     required this.onValueChanged,
     this.onSliderThumbTouchBegin,
@@ -107,14 +111,14 @@ class _CompareSliderState extends State<CompareSlider> {
   /// The width of the slider's container.
   double sliderContainerWidth = 0;
 
-  /// The width of the slider thumb.
-  double thumbWidth = 0;
+  /// The thickness of the slider.
+  double get sliderThickness => widget.thickness;
 
   /// The alignment of the slider within its stack.
   AlignmentDirectional sliderStackAlignment = AlignmentDirectional.centerStart;
 
-  /// The horizontal offset of the slider thumb.
-  double get offsetX => value * (sliderContainerWidth - thumbWidth);
+  /// The horizontal offset of the slider.
+  double get offsetX => value * (sliderContainerWidth - sliderThickness);
 
   // Tracks currently active pointers.
   final Set<int> activePointers = {};
@@ -223,9 +227,9 @@ class _CompareSliderState extends State<CompareSlider> {
     // Calculates the left and right boundaries of the slider thumb's hit-test
     // area.
     double sliderThumbHitAreaLeft =
-        sliderX - thumbWidth / 2 - widget.extraHitTestArea.left;
+        sliderX - sliderThickness / 2 - widget.extraHitTestArea.left;
     double sliderThumbHitAreaRight =
-        sliderX + thumbWidth / 2 + widget.extraHitTestArea.right;
+        sliderX + sliderThickness / 2 + widget.extraHitTestArea.right;
 
     // Uses local coordinates to determine if the touch position is on the
     // slider thumb.
@@ -290,14 +294,15 @@ class _CompareSliderState extends State<CompareSlider> {
           setState(() {
             // Uses delta to accumulate drag changes.
             double newOffsetX = (offsetX + details.delta.dx)
-                .clamp(0.0, sliderContainerWidth - thumbWidth);
-            double newValue = newOffsetX / (sliderContainerWidth - thumbWidth);
+                .clamp(0.0, sliderContainerWidth - sliderThickness);
+            double newValue =
+                newOffsetX / (sliderContainerWidth - sliderThickness);
             _updateValue(newValue);
           });
         },
         debugHitTestAreaColor: widget.debugHitTestAreaColor,
         extraHitTestArea: widget.extraHitTestArea,
-        child: _buildThumb(),
+        child: widget.thumb,
       );
       resultWidget = StackHitTestWithoutSizeLimit(
         alignment: sliderStackAlignment,
@@ -315,7 +320,7 @@ class _CompareSliderState extends State<CompareSlider> {
     // Handles the 'full area drag' mode.
     Widget resultWidget = Transform.translate(
       offset: Offset(offsetX, 0),
-      child: _buildThumb(),
+      child: widget.thumb,
     );
     resultWidget = StackHitTestWithoutSizeLimit(
       alignment: sliderStackAlignment,
@@ -328,17 +333,17 @@ class _CompareSliderState extends State<CompareSlider> {
       behavior: HitTestBehavior.translucent,
       onHorizontalDragStart: (details) {
         setState(() {
-          double newValue = (details.localPosition.dx - thumbWidth / 2)
-                  .clamp(0.0, sliderContainerWidth - thumbWidth) /
-              (sliderContainerWidth - thumbWidth);
+          double newValue = (details.localPosition.dx - sliderThickness / 2)
+                  .clamp(0.0, sliderContainerWidth - sliderThickness) /
+              (sliderContainerWidth - sliderThickness);
           _updateValue(newValue);
         });
       },
       onHorizontalDragUpdate: (details) {
         setState(() {
-          double newValue = (details.localPosition.dx - thumbWidth / 2)
-                  .clamp(0.0, sliderContainerWidth - thumbWidth) /
-              (sliderContainerWidth - thumbWidth);
+          double newValue = (details.localPosition.dx - sliderThickness / 2)
+                  .clamp(0.0, sliderContainerWidth - sliderThickness) /
+              (sliderContainerWidth - sliderThickness);
           _updateValue(newValue);
         });
       },
@@ -347,20 +352,6 @@ class _CompareSliderState extends State<CompareSlider> {
       child: resultWidget,
     );
     return resultWidget;
-  }
-
-  Widget _buildThumb() {
-    return Stack(
-      children: [
-        widget.thumb,
-        Positioned.fill(child: LayoutBuilder(
-          builder: (context, constraints) {
-            thumbWidth = constraints.maxWidth;
-            return SizedBox.shrink();
-          },
-        ))
-      ],
-    );
   }
 
   Widget _buildSliderArea() {
