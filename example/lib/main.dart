@@ -38,9 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late double valueDragAfter = value;
 
-  double sliderWidth = 1;
+  double thickness = 1;
 
-  double sliderThumbSize = 50;
+  double thumbSize = 50;
 
   double multipleSpeed = 8;
 
@@ -104,8 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
       dragOnlyOnSlider: dragOnlyOnSlider,
       before: _buildImageView(isBefore: true),
       after: _buildImageView(isBefore: false),
-      thumb: _buildSlider(),
-      extraHitTestArea: EdgeInsets.symmetric(horizontal: sliderThumbSize / 2),
+      thickness: thickness,
+      thumb: _buildThumb(),
+      extraHitTestArea: EdgeInsets.symmetric(horizontal: thumbSize / 2),
       debugHitTestAreaColor: Colors.red.withValues(
         alpha: showDebugHitTestAreaColor ? 0.2 : 0,
       ),
@@ -131,14 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return resultWidget;
   }
 
-  Widget _buildSlider() {
+  Widget _buildThumb() {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
         _buildSliderLine(),
         Positioned(
-          left: -(sliderThumbSize - sliderWidth) / 2,
+          left: -(thumbSize - thickness) / 2,
           child: _buildSliderThumb(),
         ),
       ],
@@ -147,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildSliderLine() {
     return Container(
-      width: sliderWidth,
+      width: thickness,
       color: Colors.white.withValues(alpha: 0.5),
     );
   }
@@ -155,8 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget _buildSliderThumb() {
     Widget resultWidget = Image.asset(
       'assets/thumb.png',
-      width: sliderThumbSize,
-      height: sliderThumbSize,
+      width: thumbSize,
+      height: thumbSize,
     );
     resultWidget = Transform.rotate(
       angle: value * 2 * math.pi * multipleSpeed,
