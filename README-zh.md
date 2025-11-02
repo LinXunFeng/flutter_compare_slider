@@ -14,6 +14,8 @@
 
 ![](https://raw.githubusercontent.com/LinXunFeng/flutter_assets/main/flutter_compare_slider/1.gif)
 
+🕹 在线预览: [https://linxunfeng.github.io/flutter_compare_slider/](https://linxunfeng.github.io/flutter_compare_slider/)
+
 ## 📦 安装
 
 将以下内容添加到您的包的 `pubspec.yaml` 文件中：

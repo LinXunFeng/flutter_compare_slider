@@ -14,6 +14,8 @@ Chat: [Join WeChat group](https://mp.weixin.qq.com/s/JBbMstn0qW6M71hh-BRKzw)
 
 ![](https://raw.githubusercontent.com/LinXunFeng/flutter_assets/main/flutter_compare_slider/1.gif)
 
+🕹 Online Preview: [https://linxunfeng.github.io/flutter_compare_slider/](https://linxunfeng.github.io/flutter_compare_slider/)
+
 ## 📦 Installation
 
 Add this to your package's `pubspec.yaml` file:
