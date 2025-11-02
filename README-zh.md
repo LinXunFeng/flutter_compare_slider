@@ -12,6 +12,8 @@
 
 微信技术交流群请看: [【微信群说明】](https://mp.weixin.qq.com/s/JBbMstn0qW6M71hh-BRKzw)
 
+![](https://raw.githubusercontent.com/LinXunFeng/flutter_assets/main/flutter_compare_slider/1.gif)
+
 ## 📦 安装
 
 将以下内容添加到您的包的 `pubspec.yaml` 文件中：
